@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord | TaskManager Pro</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/images/logo-white.svg" alt="TaskManager Pro" class="logo">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#">
+                            <i class="fas fa-tasks"></i>
+                            <span class="nav-text">Mes Tâches</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span class="nav-text">Calendrier</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" id="adminSection" style="display: none;">
+                        <a href="#">
+                            <i class="fas fa-users-cog"></i>
+                            <span class="nav-text">Gestion Utilisateurs</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">
+                            <i class="fas fa-cog"></i>
+                            <span class="nav-text">Paramètres</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <img src="assets/images/default-avatar.png" alt="User Avatar">
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Chargement...</span>
+                        <span class="user-role" id="userRole">Membre</span>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="btn btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="header-left">
+                    <h1 id="dashboardTitle">Mes Tâches</h1>
+                    <div class="breadcrumb">
+                        <span>Tableau de bord</span>
+                        <i class="fas fa-chevron-right"></i>
+                        <span id="currentPage">Mes Tâches</span>
+                    </div>
+                </div>
+                
+                <div class="header-right">
+                    <div class="theme-switcher">
+                        <button id="themeToggle" class="btn btn-icon">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                    <div class="notifications">
+                        <button class="btn btn-icon" id="notificationsBtn">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="content-wrapper">
+                <!-- Member Content -->
+                <div class="member-content" id="memberContent">
+                    <div class="task-actions">
+                        <button class="btn btn-primary" id="addTaskBtn">
+                            <i class="fas fa-plus"></i>
+                            <span>Ajouter une tâche</span>
+                        </button>
+                        
+                        <div class="task-filters">
+                            <div class="filter-group">
+                                <label for="statusFilter">Filtrer par statut:</label>
+                                <select id="statusFilter" class="filter-select">
+                                    <option value="all">Toutes</option>
+                                    <option value="pending">En attente</option>
+                                    <option value="in_progress">En cours</option>
+                                    <option value="completed">Terminées</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="task-list-container">
+                        <div class="task-list-header">
+                            <h2>Mes Tâches</h2>
+                            <div class="task-count">
+                                <span id="taskCount">0 tâches</span>
+                            </div>
+                        </div>
+                        
+                        <div class="task-list" id="taskList">
+                            <!-- Tasks will be loaded here dynamically -->
+                            <div class="empty-state">
+                                <i class="fas fa-tasks"></i>
+                                <p>Vous n'avez aucune tâche pour le moment</p>
+                                <button class="btn btn-primary" id="addFirstTaskBtn">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Créer ma première tâche</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Admin Content -->
+                <div class="admin-content" id="adminContent" style="display: none;">
+                    <div class="admin-tabs">
+                        <button class="tab-btn active" data-tab="users">Utilisateurs</button>
+                        <button class="tab-btn" data-tab="all-tasks">Toutes les Tâches</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="usersTab">
+                        <div class="table-responsive">
+                            <table class="users-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>Email</th>
+                                        <th>Rôle</th>
+                                        <th>Tâches</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersTableBody">
+                                    <!-- Users will be loaded here dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="allTasksTab">
+                        <div class="table-responsive">
+                            <table class="tasks-table">
+                                <thead>
+                                    <tr>
+                                        <th>Titre</th>
+                                        <th>Description</th>
+                                        <th>Statut</th>
+                                        <th>Assigné à</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allTasksTableBody">
+                                    <!-- All tasks will be loaded here dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modals -->
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Ajouter une tâche</h3>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm">
+                    <input type="hidden" id="taskId">
+                    <div class="form-group">
+                        <label for="taskTitle">Titre</label>
+                        <input type="text" id="taskTitle" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDescription">Description</label>
+                        <textarea id="taskDescription" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskStatus">Statut</label>
+                        <select id="taskStatus" name="status" required>
+                            <option value="pending">En attente</option>
+                            <option value="in_progress">En cours</option>
+                            <option value="completed">Terminée</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDueDate">Date limite</label>
+                        <input type="date" id="taskDueDate" name="due_date">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelTaskBtn">Annuler</button>
+                <button class="btn btn-primary" id="saveTaskBtn">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="confirmModal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3 id="confirmTitle">Confirmer la suppression</h3>
+                <button class="modal-close" id="closeConfirmModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage">Êtes-vous sûr de vouloir supprimer cet élément?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelConfirmBtn">Annuler</button>
+                <button class="btn btn-danger" id="confirmActionBtn">Confirmer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription | TaskManager Pro</title>
+    <link rel="stylesheet" href="assets/css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <img src="assets/images/logo.svg" alt="TaskManager Pro" class="logo">
+                <h1>Créer un compte</h1>
+                <p>Commencez à organiser vos tâches efficacement</p>
+            </div>
+            
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label for="name">Nom complet</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="name" name="name" required placeholder="Votre nom complet">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" required placeholder="exemple@email.com">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" required placeholder="••••••••">
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar"></div>
+                        <span class="strength-text">Faible</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="role">Rôle</label>
+                    <div class="select-wrapper">
+                        <select id="role" name="role" required>
+                            <option value="" disabled selected>Sélectionnez un rôle</option>
+                            <option value="member">Membre</option>
+                            <option value="admin">Administrateur</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <span class="btn-text">S'inscrire</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <div class="auth-footer">
+                    <p>Déjà un compte? <a href="login.html">Se connecter</a></p>
+                </div>
+            </form>
+        </div>
+        
+        <div class="auth-notification" id="notification">
+            <span class="notification-message"></span>
+            <button class="notification-close"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/auth.js"></script>
+</body>
+</html>
